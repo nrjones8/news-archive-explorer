@@ -70,7 +70,6 @@ class App extends Component {
         <div className="row justify-content-md-center">
           <div className="col col-md-auto">
             <h5>Day</h5>
-            {/* TODO limit dates from start of 2019 --> present */}
             {/* 
               TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
               https://github.com/namespace-ee/react-calendar-timeline
@@ -80,7 +79,13 @@ class App extends Component {
               https://whoisandy.github.io/react-rangeslider/
               https://github.com/davidchin/react-input-range
             */}
-            <DatePicker selected={this.state.yearMonthDay} onChange={this.handleDayChange} />
+            <DatePicker
+              selected={this.state.yearMonthDay}
+              onChange={this.handleDayChange}
+              minDate={new Date(2019, 0, 0)}
+              // TODO make sure timezones are being handled correctly here
+              maxDate={new Date()}
+            />
           
             <div id="hourPicker">
               <input
