@@ -14,8 +14,9 @@ import 'bootstrap/dist/js/bootstrap.js';
 
 
 // Good simple overview: https://codeburst.io/getting-started-with-react-router-5c978f70df91
+// Handling routing with Github Pages: https://github.com/facebook/create-react-app/issues/1765#issuecomment-327615099
 const routing = (
-  <Router>
+  <Router basename={process.env.PUBLIC_URL}>
     <div>
       <Route exact path="/" component={App} />
       <Route exact path="/about" component={About} />
