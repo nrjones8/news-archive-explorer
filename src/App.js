@@ -88,33 +88,15 @@ class App extends Component {
     this.setState({hour: event.target.value});
   }
 
+  // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
+  generateDeeplink() {}
+
   render() {
     return (
       <div className="container mt-5">
-        <div className="row">
-          <div className="col">
-            <div className="card-deck">
-              <ScreenshotCard 
-                website={this.state.leftWebsite} 
-                year={this.state.yearMonthDay.getFullYear()}
-                month={this.state.yearMonthDay.getMonth() + 1}
-                day={this.state.yearMonthDay.getDate()}
-                hour={this.state.hour} 
-              />
-              <ScreenshotCard
-                website={this.state.rightWebsite}
-                year={this.state.yearMonthDay.getFullYear()} 
-                month={this.state.yearMonthDay.getMonth() + 1}
-                day={this.state.yearMonthDay.getDate()}
-                hour={this.state.hour} 
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="row justify-content-md-center">
-          <div className="col col-md-auto">
-            <h5>Day</h5>
+        <div className="form-row justify-content-md-center">
+          <div className="">
+            <h5>Day and Hour</h5>
             {/* 
               TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
               https://github.com/namespace-ee/react-calendar-timeline
@@ -127,20 +109,33 @@ class App extends Component {
             <DatePicker
               selected={this.state.yearMonthDay}
               onChange={this.handleDayChange}
+              showTimeSelect
+              dateFormat="MMMM d, yyyy ha"
+              timeFormat="HH"
+              timeIntervals={60}
               minDate={MIN_DATE}
               // TODO make sure timezones are being handled correctly here
               maxDate={MAX_DATE}
             />
-          
-            <div id="hourPicker">
-              <input
-                type="range" 
-                min="0" max="23" 
-                value={this.state.hour} 
-                onChange={this.handleHourChange}
-                step="1"
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            <div className="card-deck">
+              <ScreenshotCard
+                website={this.state.leftWebsite}
+                year={this.state.yearMonthDay.getFullYear()}
+                month={this.state.yearMonthDay.getMonth() + 1}
+                day={this.state.yearMonthDay.getDate()}
+                hour={this.state.yearMonthDay.getHours()}
               />
-              {this.state.hour}
+              <ScreenshotCard
+                website={this.state.rightWebsite}
+                year={this.state.yearMonthDay.getFullYear()}
+                month={this.state.yearMonthDay.getMonth() + 1}
+                day={this.state.yearMonthDay.getDate()}
+                hour={this.state.yearMonthDay.getHours()}
+              />
             </div>
           </div>
         </div>
@@ -153,6 +148,8 @@ export default App;
 
 function screenshotUrl(website, year, month, day, hour) {
   // https://d1k37mkoj29puy.cloudfront.net/foxnews.com/2019/3/15/23/2/screenshot.png
+  // All screenshots are taken at the second minute of the hour. See:
+  // https://github.com/nrjones8/website-screenshotter#how-to-access-screenshots
   return `https://d1k37mkoj29puy.cloudfront.net/${website}/${year}/${month}/${day}/${hour}/2/screenshot.png`;
 }
 
@@ -176,11 +173,6 @@ class ScreenshotCard extends Component {
   render() {
     return (
       <div className="card">
-        <img 
-          className="card-img-top" 
-          // Only website is in this component's state, the rest comes from the parent
-          src={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)} alt="Card cap" 
-        />
         <div className="card-body">
           <h5 className="card-title">
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
@@ -188,6 +180,12 @@ class ScreenshotCard extends Component {
           {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
           <p className="card-text"><small className="text-muted">something here?</small></p>
         </div>
+        <img
+          className="card-img-top"
+          // Only website is in this component's state, the rest comes from the parent
+          src={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}
+          alt={`Screenshot of ${this.state.websiteName} taken on ${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours`}
+        />
       </div>
     )
   }
