@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 
+import queryString from 'query-string';
+
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +15,12 @@ const websites = [
   "foxnews.com"
 ];
 
+// When screenshots are first available - zero-indexed dates, this is JS
+const MIN_DATE = new Date(2019, 0, 0);
+
+// TODO - make sure timezones are handled correctly here, they're probably not
+const MAX_DATE = new Date();
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,19 +28,37 @@ class App extends Component {
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
 
-    // month is zero-indexed
+    const queryParams = queryString.parse(props.location.search);
+    this.state = this.getInitialState(queryParams);
+  }
+
+  getInitialState(queryParams) {
+    console.log(queryParams);
     const originalDate = new Date(2019, 3, 18);
-    // TODO get these from URL so people can deep-link to specific times / websites
-    this.state = {
-      leftWebsite: "nytimes.com",
-      rightWebsite: "foxnews.com",
-      year: 2019,
-      month: 4,
-      day: 18,
+    const defaultLeft = "nytimes.com";
+    const defaultRight = "cnn.com"
+
+    const leftFromParams = queryParams.siteOne;
+    const rightFromParams = queryParams.siteTwo;
+
+    // TODO - display something if the provided website isn't one of the supported ones?
+    // otherwise just looks like a bug to a user if their URL includes website X but website
+    // Y shows up
+    const leftWebsite = (leftFromParams && websites.includes(leftFromParams))
+      ? leftFromParams
+      : defaultLeft;
+
+    const rightWebsite = (rightFromParams && websites.includes(rightFromParams))
+      ? rightFromParams
+      : defaultRight;
+
+    return {
+      leftWebsite: leftWebsite,
+      rightWebsite: rightWebsite,
       yearMonthDay: originalDate,
 
       hour: 12
-    }
+    };
   }
 
   handleDayChange(newDay) {
@@ -82,9 +108,9 @@ class App extends Component {
             <DatePicker
               selected={this.state.yearMonthDay}
               onChange={this.handleDayChange}
-              minDate={new Date(2019, 0, 0)}
+              minDate={MIN_DATE}
               // TODO make sure timezones are being handled correctly here
-              maxDate={new Date()}
+              maxDate={MAX_DATE}
             />
           
             <div id="hourPicker">
@@ -140,6 +166,7 @@ class ScreenshotCard extends Component {
           <h5 className="card-title">
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
+          {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
           <p className="card-text"><small className="text-muted">something here?</small></p>
         </div>
       </div>
