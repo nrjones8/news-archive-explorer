@@ -162,16 +162,14 @@ class WebsitePicker extends Component {
   render() {
     return (
       <form>
-        <label>
-          Select website:
-          <select value={this.props.website} onChange={this.handleChange}>
-            {
-              websites.map((websiteName) => {
-                return <option value={websiteName} key={websiteName}>{websiteName}</option>
-              })
-            }
-          </select>
-        </label>
+        <label>Website</label>
+        <select className="form-control" value={this.props.website} onChange={this.handleChange}>
+          {
+            websites.map((websiteName) => {
+              return <option value={websiteName} key={websiteName}>{websiteName}</option>
+            })
+          }
+        </select>
       </form>
     );
   }

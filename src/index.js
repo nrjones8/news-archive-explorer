@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 // Import Bootstrap CSS and JS
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootswatch/dist/litera/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
 
