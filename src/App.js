@@ -33,8 +33,6 @@ class App extends Component {
   }
 
   getInitialState(queryParams) {
-    console.log(queryParams);
-    const originalDate = new Date(2019, 3, 18);
     const defaultLeft = "nytimes.com";
     const defaultRight = "cnn.com"
 
@@ -52,12 +50,33 @@ class App extends Component {
       ? rightFromParams
       : defaultRight;
 
+    const providedYear = parseInt(queryParams.year);
+    // Zero-indexed
+    const providedMonth = parseInt(queryParams.month) - 1;
+    const providedDay = parseInt(queryParams.day);
+    // TODO this is a pretty janky way to handle dates...
+    const targetDate = new Date(
+      providedYear ? providedYear : 2019,
+      providedMonth ? providedMonth : 4, 
+      providedDay ? providedDay : 18
+    );
+
+    // TODO - definitely display something if we can't parse the date
+    const dateToUse = (targetDate && targetDate > MIN_DATE && targetDate <= MAX_DATE)
+      ? targetDate
+      : new Date();
+
+    // Default to 9am ET if not provided
+    const hour = (queryParams.hour && queryParams.hour >= 0 && queryParams.hour < 24)
+      ? queryParams.hour
+      : 13;
+
     return {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
-      yearMonthDay: originalDate,
+      yearMonthDay: dateToUse,
 
-      hour: 12
+      hour: hour
     };
   }
 
