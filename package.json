@@ -7,6 +7,7 @@
     "bootswatch": "^4.3.1",
     "gh-pages": "^2.0.1",
     "jquery": "^3.4.0",
+    "moment": "^2.24.0",
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.4.2",

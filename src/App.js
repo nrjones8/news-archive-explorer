@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 
 import queryString from 'query-string';
+import moment from 'moment';
 
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
 
@@ -21,16 +22,25 @@ const MIN_DATE = new Date(2019, 0, 0);
 // TODO - make sure timezones are handled correctly here, they're probably not
 const MAX_DATE = new Date();
 
+const ANIMATION_START_TEXT = "Start";
+const ANIMATION_PAUSE_TEXT = "Pause";
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleDayChange = this.handleDayChange.bind(this);
-    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleAnimationToggle = this.handleAnimationToggle.bind(this);
 
     const queryParams = queryString.parse(props.location.search);
     this.state = this.getInitialState(queryParams);
   }
+
+  // "animate"
+  // 1. Interval (e.g. 1 hour, 1 day, 6 hours, etc.)
+  // 2. "start" button
+  // 3. "stop" button (can be the same one I guess)
+  // Start with just a button that animates at. fixed interval
 
   getInitialState(queryParams) {
     const defaultLeft = "nytimes.com";
@@ -75,8 +85,14 @@ class App extends Component {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
       yearMonthDay: dateToUse,
+      // TODO - remove this
+      hour: hour,
 
-      hour: hour
+      isAnimating: false,
+      animationButtonText: ANIMATION_START_TEXT,
+      // do we need to clearInterval..?
+      // https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class
+      timer: null,
     };
   }
 
@@ -84,8 +100,29 @@ class App extends Component {
     this.setState({yearMonthDay: newDay});
   }
 
-  handleHourChange(event) {
-    this.setState({hour: event.target.value});
+  handleAnimationToggle(event) {
+    if (this.state.isAnimating) {
+      this.setState({
+        isAnimating: false,
+        animationButtonText: ANIMATION_START_TEXT,
+      });
+      clearInterval(this.state.timer);
+    } else {
+      const interval = setInterval(
+        () => this.incrementTime(),
+        4000
+      );
+      this.setState({
+        isAnimating: true,
+        animationButtonText: ANIMATION_PAUSE_TEXT,
+        timer: interval,
+      });
+    }
+  }
+
+  incrementTime() {
+    const updated = moment(this.state.yearMonthDay).add(1, 'days').toDate();
+    this.setState({yearMonthDay: updated});
   }
 
   // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
@@ -95,8 +132,7 @@ class App extends Component {
     return (
       <div className="container mt-5">
         <div className="form-row justify-content-md-center">
-          <div className="">
-            <h5>Day and Hour</h5>
+            <h5>Day and Hour: </h5>
             {/* 
               TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
               https://github.com/namespace-ee/react-calendar-timeline
@@ -116,9 +152,20 @@ class App extends Component {
               minDate={MIN_DATE}
               // TODO make sure timezones are being handled correctly here
               maxDate={MAX_DATE}
+              className="form-control"
             />
-          </div>
+
+            <button
+              onClick={this.handleAnimationToggle}
+              type="button"
+              className="btn btn-primary"
+            >
+              {this.state.animationButtonText}
+            </button>
+
         </div>
+        {/* TODO I think <br> is bad so change this? */}
+        <br />
         <div className="row">
           <div className="col">
             <div className="card-deck">
