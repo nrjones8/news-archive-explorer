@@ -20,7 +20,9 @@ const websites = [
 const MIN_DATE = new Date(2019, 0, 0);
 
 // TODO - make sure timezones are handled correctly here, they're probably not
-const MAX_DATE = new Date();
+// TODO - set back to the present
+// const MAX_DATE = new Date();
+const MAX_DATE = new Date(2019, 3, 21);
 
 const ANIMATION_START_TEXT = "Start";
 const ANIMATION_PAUSE_TEXT = "Pause";
@@ -67,14 +69,14 @@ class App extends Component {
     // TODO this is a pretty janky way to handle dates...
     const targetDate = new Date(
       providedYear ? providedYear : 2019,
-      providedMonth ? providedMonth : 4, 
-      providedDay ? providedDay : 18
+      providedMonth ? providedMonth : 2,
+      providedDay ? providedDay : 26
     );
 
     // TODO - definitely display something if we can't parse the date
     const dateToUse = (targetDate && targetDate > MIN_DATE && targetDate <= MAX_DATE)
       ? targetDate
-      : new Date();
+      : new Date(2019, 2, 26);
 
     // Default to 9am ET if not provided
     const hour = (queryParams.hour && queryParams.hour >= 0 && queryParams.hour < 24)
@@ -110,7 +112,7 @@ class App extends Component {
     } else {
       const interval = setInterval(
         () => this.incrementTime(),
-        4000
+        1500
       );
       this.setState({
         isAnimating: true,
@@ -194,10 +196,10 @@ class App extends Component {
 export default App;
 
 function screenshotUrl(website, year, month, day, hour) {
-  // https://d1k37mkoj29puy.cloudfront.net/foxnews.com/2019/3/15/23/2/screenshot.png
+  // https://d1k37mkoj29puy.cloudfront.net/foxnews.com/2019/3/15/23/2/screenshot.{png,jpeg}
   // All screenshots are taken at the second minute of the hour. See:
   // https://github.com/nrjones8/website-screenshotter#how-to-access-screenshots
-  return `https://d1k37mkoj29puy.cloudfront.net/${website}/${year}/${month}/${day}/${hour}/2/screenshot.png`;
+  return `https://d1k37mkoj29puy.cloudfront.net/${website}/${year}/${month}/${day}/${hour}/2/screenshot.jpeg`;
 }
 
 class ScreenshotCard extends Component {
