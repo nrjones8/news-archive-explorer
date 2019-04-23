@@ -18,7 +18,7 @@ const MIN_DATE = new Date(2019, 0, 0);
 // const MAX_DATE = new Date();
 const MAX_DATE = new Date(2019, 3, 21);
 
-const ANIMATION_START_TEXT = "Start";
+const ANIMATION_START_TEXT = "Animate";
 const ANIMATION_PAUSE_TEXT = "Pause";
 
 class App extends Component {
