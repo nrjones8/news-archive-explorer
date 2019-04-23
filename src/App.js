@@ -4,17 +4,11 @@ import DatePicker from 'react-datepicker';
 import queryString from 'query-string';
 import moment from 'moment';
 
+import websites from './WebsiteUtils.js';
+
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
 
 import "react-datepicker/dist/react-datepicker.css";
-
-const websites = [
-  "nytimes.com",
-  "washingtonpost.com",
-  "cnn.com",
-  "wsj.com",
-  "foxnews.com"
-];
 
 // When screenshots are first available - zero-indexed dates, this is JS
 const MIN_DATE = new Date(2019, 0, 0);
@@ -37,12 +31,6 @@ class App extends Component {
     const queryParams = queryString.parse(props.location.search);
     this.state = this.getInitialState(queryParams);
   }
-
-  // "animate"
-  // 1. Interval (e.g. 1 hour, 1 day, 6 hours, etc.)
-  // 2. "start" button
-  // 3. "stop" button (can be the same one I guess)
-  // Start with just a button that animates at. fixed interval
 
   getInitialState(queryParams) {
     const defaultLeft = "nytimes.com";
@@ -78,17 +66,10 @@ class App extends Component {
       ? targetDate
       : new Date(2019, 2, 26);
 
-    // Default to 9am ET if not provided
-    const hour = (queryParams.hour && queryParams.hour >= 0 && queryParams.hour < 24)
-      ? queryParams.hour
-      : 13;
-
     return {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
       yearMonthDay: dateToUse,
-      // TODO - remove this
-      hour: hour,
 
       isAnimating: false,
       animationButtonText: ANIMATION_START_TEXT,
@@ -123,6 +104,7 @@ class App extends Component {
   }
 
   incrementTime() {
+    // TODO (UX) make this configurable (i.e. allow for adding 1 day or 1 hour or 6 hours etc.)
     const updated = moment(this.state.yearMonthDay).add(1, 'days').toDate();
     this.setState({yearMonthDay: updated});
   }
@@ -134,7 +116,6 @@ class App extends Component {
     return (
       <div className="container mt-5">
         <div className="form-row justify-content-md-center">
-            <h5>Day and Hour: </h5>
             {/* 
               TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
               https://github.com/namespace-ee/react-calendar-timeline
@@ -227,6 +208,7 @@ class ScreenshotCard extends Component {
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
           {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
+          {/* TODO (UX) - WaPo in particular is missing a bunch, should definitely put a warning here */}
           <p className="card-text"><small className="text-muted">something here?</small></p>
         </div>
         <img
