@@ -54,17 +54,21 @@ class App extends Component {
     // Zero-indexed
     const providedMonth = parseInt(queryParams.month) - 1;
     const providedDay = parseInt(queryParams.day);
+    const providedHour = parseInt(queryParams.hour);
     // TODO this is a pretty janky way to handle dates...
     const targetDate = new Date(
       providedYear ? providedYear : 2019,
       providedMonth ? providedMonth : 2,
-      providedDay ? providedDay : 26
+      providedDay ? providedDay : 26,
+      // // Default to 9am ET if not provided
+      providedHour ? providedHour : 13
     );
 
     // TODO - definitely display something if we can't parse the date
+    // TODO - this is likely redundant with the targetDate stuff above
     const dateToUse = (targetDate && targetDate > MIN_DATE && targetDate <= MAX_DATE)
       ? targetDate
-      : new Date(2019, 2, 26);
+      : new Date(2019, 2, 26, 13);
 
     return {
       leftWebsite: leftWebsite,
