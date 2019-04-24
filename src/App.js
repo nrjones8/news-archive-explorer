@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import queryString from 'query-string';
 import moment from 'moment';
 
+import NavBar from './NavBar.js';
 import websites from './WebsiteUtils.js';
 
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
@@ -121,58 +122,61 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container mt-5">
-        <div className="form-row justify-content-md-center">
-            {/* 
-              TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
-              https://github.com/namespace-ee/react-calendar-timeline
-              https://github.com/onejgordon/react-life-timeline
-              or create your own:
-              https://react-component.github.io/slider/
-              https://whoisandy.github.io/react-rangeslider/
-              https://github.com/davidchin/react-input-range
-            */}
-            <DatePicker
-              selected={this.state.yearMonthDay}
-              onChange={this.handleDayChange}
-              showTimeSelect
-              dateFormat="MMMM d, yyyy ha"
-              timeFormat="HH"
-              timeIntervals={60}
-              minDate={MIN_DATE}
-              // TODO make sure timezones are being handled correctly here
-              maxDate={MAX_DATE}
-              className="form-control"
-            />
-
-            <button
-              onClick={this.handleAnimationToggle}
-              type="button"
-              className="btn btn-primary"
-            >
-              {this.state.animationButtonText}
-            </button>
-
-        </div>
-        {/* TODO I think <br> is bad so change this? */}
-        <br />
-        <div className="row">
-          <div className="col">
-            <div className="card-deck">
-              <ScreenshotCard
-                website={this.state.leftWebsite}
-                year={this.state.yearMonthDay.getFullYear()}
-                month={this.state.yearMonthDay.getMonth() + 1}
-                day={this.state.yearMonthDay.getDate()}
-                hour={this.state.yearMonthDay.getHours()}
+      <div className="App-wrapper">
+        <NavBar />
+        <div className="container mt-5">
+          <div className="form-row justify-content-md-center">
+              {/* 
+                TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
+                https://github.com/namespace-ee/react-calendar-timeline
+                https://github.com/onejgordon/react-life-timeline
+                or create your own:
+                https://react-component.github.io/slider/
+                https://whoisandy.github.io/react-rangeslider/
+                https://github.com/davidchin/react-input-range
+              */}
+              <DatePicker
+                selected={this.state.yearMonthDay}
+                onChange={this.handleDayChange}
+                showTimeSelect
+                dateFormat="MMMM d, yyyy ha"
+                timeFormat="HH"
+                timeIntervals={60}
+                minDate={MIN_DATE}
+                // TODO make sure timezones are being handled correctly here
+                maxDate={MAX_DATE}
+                className="form-control"
               />
-              <ScreenshotCard
-                website={this.state.rightWebsite}
-                year={this.state.yearMonthDay.getFullYear()}
-                month={this.state.yearMonthDay.getMonth() + 1}
-                day={this.state.yearMonthDay.getDate()}
-                hour={this.state.yearMonthDay.getHours()}
-              />
+
+              <button
+                onClick={this.handleAnimationToggle}
+                type="button"
+                className="btn btn-primary"
+              >
+                {this.state.animationButtonText}
+              </button>
+
+          </div>
+          {/* TODO I think <br> is bad so change this? */}
+          <br />
+          <div className="row">
+            <div className="col">
+              <div className="card-deck">
+                <ScreenshotCard
+                  website={this.state.leftWebsite}
+                  year={this.state.yearMonthDay.getFullYear()}
+                  month={this.state.yearMonthDay.getMonth() + 1}
+                  day={this.state.yearMonthDay.getDate()}
+                  hour={this.state.yearMonthDay.getHours()}
+                />
+                <ScreenshotCard
+                  website={this.state.rightWebsite}
+                  year={this.state.yearMonthDay.getFullYear()}
+                  month={this.state.yearMonthDay.getMonth() + 1}
+                  day={this.state.yearMonthDay.getDate()}
+                  hour={this.state.yearMonthDay.getHours()}
+                />
+              </div>
             </div>
           </div>
         </div>
