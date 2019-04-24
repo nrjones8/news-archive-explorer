@@ -23,6 +23,10 @@
   color: #61dafb;
 }
 
+.App-card {
+  border-color: darkgrey;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

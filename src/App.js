@@ -8,7 +8,9 @@ import websites from './WebsiteUtils.js';
 
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'bootswatch/dist/litera/bootstrap.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import './App.css';
 
 // When screenshots are first available - zero-indexed dates, this is JS
 const MIN_DATE = new Date(2019, 0, 0);
@@ -20,6 +22,7 @@ const MAX_DATE = new Date(2019, 3, 21);
 
 const ANIMATION_START_TEXT = "Animate";
 const ANIMATION_PAUSE_TEXT = "Pause";
+
 
 class App extends Component {
   constructor(props) {
@@ -206,7 +209,7 @@ class ScreenshotCard extends Component {
 
   render() {
     return (
-      <div className="card">
+      <div className="card App-card">
         <div className="card-body">
           <h5 className="card-title">
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
