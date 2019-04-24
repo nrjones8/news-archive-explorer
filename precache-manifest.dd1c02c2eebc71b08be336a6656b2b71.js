@@ -4,23 +4,23 @@ self.__precacheManifest = [
     "url": "/news-archive-explorer/static/js/runtime~main.fac48073.js"
   },
   {
-    "revision": "76b0d9528544f3bbdd9b",
-    "url": "/news-archive-explorer/static/js/main.8bb942cd.chunk.js"
+    "revision": "27d2b8cd5ed7296413ed",
+    "url": "/news-archive-explorer/static/js/main.c10f15e4.chunk.js"
   },
   {
-    "revision": "2d3eb80fd2de56c349ca",
-    "url": "/news-archive-explorer/static/js/2.730486b1.chunk.js"
+    "revision": "a9bcca068a3e6da9d6f6",
+    "url": "/news-archive-explorer/static/js/2.9e9ff0ca.chunk.js"
   },
   {
-    "revision": "76b0d9528544f3bbdd9b",
+    "revision": "27d2b8cd5ed7296413ed",
     "url": "/news-archive-explorer/static/css/main.3d3e6b79.chunk.css"
   },
   {
-    "revision": "2d3eb80fd2de56c349ca",
+    "revision": "a9bcca068a3e6da9d6f6",
     "url": "/news-archive-explorer/static/css/2.4131a817.chunk.css"
   },
   {
-    "revision": "d821efb3aa394c162962d0d51d4488f5",
+    "revision": "34be96832465a3a63345b0e54de323bd",
     "url": "/news-archive-explorer/index.html"
   }
 ];
