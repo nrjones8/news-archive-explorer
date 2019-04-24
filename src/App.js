@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import moment from 'moment';
 
 import NavBar from './NavBar.js';
-import websites from './WebsiteUtils.js';
+import { websites, getWebsitePreviewText } from './WebsiteUtils.js';
 
 // Based largely on https://upmostly.com/tutorials/create-simple-web-app-react-airtable/
 
@@ -222,7 +222,7 @@ class ScreenshotCard extends Component {
           </h5>
           {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
           {/* TODO (UX) - WaPo in particular is missing a bunch, should definitely put a warning here */}
-          <p className="card-text"><small className="text-muted">something here?</small></p>
+          <p className="card-text"><small className="text-muted">{getWebsitePreviewText(this.state.websiteName)}</small></p>
         </div>
         <img
           className="card-img-top"
