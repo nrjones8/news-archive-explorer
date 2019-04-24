@@ -1,15 +1,15 @@
 {
-  "main.css": "/news-archive-explorer/static/css/main.b2579cea.chunk.css",
-  "main.js": "/news-archive-explorer/static/js/main.2d950a18.chunk.js",
-  "main.js.map": "/news-archive-explorer/static/js/main.2d950a18.chunk.js.map",
+  "main.css": "/news-archive-explorer/static/css/main.3d3e6b79.chunk.css",
+  "main.js": "/news-archive-explorer/static/js/main.8bb942cd.chunk.js",
+  "main.js.map": "/news-archive-explorer/static/js/main.8bb942cd.chunk.js.map",
   "runtime~main.js": "/news-archive-explorer/static/js/runtime~main.fac48073.js",
   "runtime~main.js.map": "/news-archive-explorer/static/js/runtime~main.fac48073.js.map",
-  "static/css/2.c920d86e.chunk.css": "/news-archive-explorer/static/css/2.c920d86e.chunk.css",
-  "static/js/2.22780857.chunk.js": "/news-archive-explorer/static/js/2.22780857.chunk.js",
-  "static/js/2.22780857.chunk.js.map": "/news-archive-explorer/static/js/2.22780857.chunk.js.map",
+  "static/css/2.4131a817.chunk.css": "/news-archive-explorer/static/css/2.4131a817.chunk.css",
+  "static/js/2.730486b1.chunk.js": "/news-archive-explorer/static/js/2.730486b1.chunk.js",
+  "static/js/2.730486b1.chunk.js.map": "/news-archive-explorer/static/js/2.730486b1.chunk.js.map",
   "index.html": "/news-archive-explorer/index.html",
-  "precache-manifest.01865df36e70299186e32ec168bd79fc.js": "/news-archive-explorer/precache-manifest.01865df36e70299186e32ec168bd79fc.js",
+  "precache-manifest.8c5b18301201b1e18c4f1fe76e851d8d.js": "/news-archive-explorer/precache-manifest.8c5b18301201b1e18c4f1fe76e851d8d.js",
   "service-worker.js": "/news-archive-explorer/service-worker.js",
-  "static/css/2.c920d86e.chunk.css.map": "/news-archive-explorer/static/css/2.c920d86e.chunk.css.map",
-  "static/css/main.b2579cea.chunk.css.map": "/news-archive-explorer/static/css/main.b2579cea.chunk.css.map"
+  "static/css/2.4131a817.chunk.css.map": "/news-archive-explorer/static/css/2.4131a817.chunk.css.map",
+  "static/css/main.3d3e6b79.chunk.css.map": "/news-archive-explorer/static/css/main.3d3e6b79.chunk.css.map"
 }
