@@ -148,13 +148,15 @@ class App extends Component {
                 className="form-control"
               />
 
-              <button
-                onClick={this.handleAnimationToggle}
-                type="button"
-                className="btn btn-primary"
-              >
-                {this.state.animationButtonText}
-              </button>
+              <div className="px-2">
+                <button
+                  onClick={this.handleAnimationToggle}
+                  type="button"
+                  className="btn btn-primary"
+                >
+                  {this.state.animationButtonText}
+                </button>
+              </div>
 
           </div>
           {/* TODO I think <br> is bad so change this? */}
