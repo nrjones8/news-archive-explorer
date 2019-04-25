@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 
 import queryString from 'query-string';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 import NavBar from './NavBar.js';
 import { websites, getWebsitePreviewText } from './WebsiteUtils.js';
@@ -158,6 +158,8 @@ class App extends Component {
                 </button>
               </div>
 
+            {/* TODO - "share current view" button */}
+
           </div>
           {/* TODO I think <br> is bad so change this? */}
           <br />
@@ -221,7 +223,6 @@ class ScreenshotCard extends Component {
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
           {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
-          {/* TODO (UX) - WaPo in particular is missing a bunch, should definitely put a warning here */}
           <p className="card-text"><small className="text-muted">{getWebsitePreviewText(this.state.websiteName)}</small></p>
         </div>
         <img
