@@ -17,9 +17,7 @@ import './App.css';
 const MIN_DATE = new Date(2019, 0, 0);
 
 // TODO - make sure timezones are handled correctly here, they're probably not
-// TODO - set back to the present
-// const MAX_DATE = new Date();
-const MAX_DATE = new Date(2019, 3, 21);
+const MAX_DATE = new Date();
 
 const ANIMATION_START_TEXT = "Animate";
 const ANIMATION_PAUSE_TEXT = "Pause";
@@ -114,7 +112,14 @@ class App extends Component {
   incrementTime() {
     // TODO (UX) make this configurable (i.e. allow for adding 1 day or 1 hour or 6 hours etc.)
     const updated = moment(this.state.yearMonthDay).add(1, 'days').toDate();
-    this.setState({yearMonthDay: updated});
+    if (updated > MIN_DATE && updated < MAX_DATE) {
+      this.setState({yearMonthDay: updated});
+    } else {
+      // TODO tell the user?
+      console.log(`Date outside of current supported range of ${MIN_DATE} to ${MAX_DATE}`);
+      // TODO the point of this call is to pause animation, but it's a little janky and misleading
+      this.handleAnimationToggle();
+    }
   }
 
   // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
