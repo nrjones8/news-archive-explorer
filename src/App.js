@@ -227,7 +227,6 @@ class ScreenshotCard extends Component {
           <h5 className="card-title">
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
-          {/* TODO - put some useful text here? E.g. wsj.com has a bunch of undismissed modals. Caveat it? */}
           <p className="card-text"><small className="text-muted">{getWebsitePreviewText(this.state.websiteName)}</small></p>
         </div>
         <img
