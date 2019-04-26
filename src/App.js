@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 
 import queryString from 'query-string';
-import moment from 'moment-timezone';
+import moment from 'moment';
 
 import NavBar from './NavBar.js';
 import { websites, getWebsitePreviewText } from './WebsiteUtils.js';
@@ -173,17 +173,17 @@ class App extends Component {
               <div className="card-deck">
                 <ScreenshotCard
                   website={this.state.leftWebsite}
-                  year={this.state.yearMonthDay.getFullYear()}
-                  month={this.state.yearMonthDay.getMonth() + 1}
-                  day={this.state.yearMonthDay.getDate()}
-                  hour={this.state.yearMonthDay.getHours()}
+                  year={this.state.yearMonthDay.getUTCFullYear()}
+                  month={this.state.yearMonthDay.getUTCMonth() + 1}
+                  day={this.state.yearMonthDay.getUTCDate()}
+                  hour={this.state.yearMonthDay.getUTCHours()}
                 />
                 <ScreenshotCard
                   website={this.state.rightWebsite}
-                  year={this.state.yearMonthDay.getFullYear()}
-                  month={this.state.yearMonthDay.getMonth() + 1}
-                  day={this.state.yearMonthDay.getDate()}
-                  hour={this.state.yearMonthDay.getHours()}
+                  year={this.state.yearMonthDay.getUTCFullYear()}
+                  month={this.state.yearMonthDay.getUTCMonth() + 1}
+                  day={this.state.yearMonthDay.getUTCDate()}
+                  hour={this.state.yearMonthDay.getUTCHours()}
                 />
               </div>
             </div>
@@ -229,9 +229,13 @@ class ScreenshotCard extends Component {
         </div>
         <img
           className="card-img-top"
-          // Only website is in this component's state, the rest comes from the parent
+          // Only website is in this component's state, the rest comes from the parent.
+          // The year/month/day/hour props are expected to be in UTC.
           src={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}
-          alt={`Screenshot of ${this.state.websiteName} taken on ${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours`}
+          alt={
+            `Screenshot of the homepage of ${this.state.websiteName} taken on ` +
+            `${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours UTC`
+          }
         />
       </div>
     )
