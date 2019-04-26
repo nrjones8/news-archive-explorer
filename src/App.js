@@ -194,8 +194,6 @@ class App extends Component {
   }
 }
 
-export default App;
-
 function screenshotUrl(website, year, month, day, hour) {
   // https://d1k37mkoj29puy.cloudfront.net/foxnews.com/2019/3/15/23/2/screenshot.{png,jpeg}
   // All screenshots are taken at the second minute of the hour. See:
@@ -267,3 +265,5 @@ class WebsitePicker extends Component {
     );
   }
 }
+
+export default App;
