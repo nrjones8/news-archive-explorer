@@ -62,8 +62,8 @@ class App extends Component {
       providedYear ? providedYear : 2019,
       providedMonth ? providedMonth : 2,
       providedDay ? providedDay : 26,
-      // // Default to 9am ET if not provided
-      providedHour ? providedHour : 13
+      // Default to 9am local time if not provided
+      providedHour ? providedHour : 9
     );
 
     // TODO - definitely display something if we can't parse the date
