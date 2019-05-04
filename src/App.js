@@ -22,12 +22,17 @@ const MAX_DATE = new Date();
 const ANIMATION_START_TEXT = "Animate";
 const ANIMATION_PAUSE_TEXT = "Pause";
 
+const INTERVAL_1_HOUR = '1 Hour';
+const INTERVAL_4_HOURS = '4 Hours';
+const INTERVAL_24_HOURS = '24 Hours';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleDayChange = this.handleDayChange.bind(this);
+    this.handleTimeIntervalChange = this.handleTimeIntervalChange.bind(this);
     this.handleAnimationToggle = this.handleAnimationToggle.bind(this);
 
     const queryParams = queryString.parse(props.location.search);
@@ -82,11 +87,17 @@ class App extends Component {
       // do we need to clearInterval..?
       // https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class
       timer: null,
+      // 4 hours seems like reasonable default
+      timeInterval: INTERVAL_4_HOURS,
     };
   }
 
   handleDayChange(newDay) {
     this.setState({yearMonthDay: newDay});
+  }
+
+  handleTimeIntervalChange(newInterval) {
+    this.setState({timeInterval: newInterval});
   }
 
   handleAnimationToggle(event) {
@@ -166,10 +177,29 @@ class App extends Component {
             {/* TODO - "share current view" button */}
 
           </div>
+
+          <div className="form-row justify-content-md-center py-2">
+            {/* TODO - need Font Awesome or somethin https://www.npmjs.com/package/react-fontawesome */}
+            <button type="button" className="btn btn-info">Subtract</button>
+
+            <div className="px-2">
+              <form>
+                <select className="form-control" value={this.props.timeInterval} onChange={this.handleTimeIntervalChange}>
+                  <option value={INTERVAL_1_HOUR} key={INTERVAL_1_HOUR}>{INTERVAL_1_HOUR}</option>
+                  <option value={INTERVAL_4_HOURS} key={INTERVAL_4_HOURS}>{INTERVAL_4_HOURS}</option>
+                  <option value={INTERVAL_24_HOURS} key={INTERVAL_24_HOURS}>{INTERVAL_24_HOURS}</option>
+                </select>
+              </form>
+            </div>
+
+            <button type="button" className="btn btn-info">Add</button>
+          </div>
+
           {/* TODO I think <br> is bad so change this? */}
           <br />
           <div className="row">
             <div className="col">
+              {/* TODO - somethin somethin fix this horrible whitespace, maybe https://www.w3schools.com/cssref/css3_pr_flex.asp */}
               <div className="card-deck">
                 <ScreenshotCard
                   website={this.state.leftWebsite}
