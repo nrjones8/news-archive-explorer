@@ -22,9 +22,9 @@ const MAX_DATE = new Date();
 const ANIMATION_START_TEXT = "Animate";
 const ANIMATION_PAUSE_TEXT = "Pause";
 
-const INTERVAL_1_HOUR = '1 Hour';
-const INTERVAL_4_HOURS = '4 Hours';
-const INTERVAL_24_HOURS = '24 Hours';
+const INTERVAL_1_HOUR = 1;
+const INTERVAL_4_HOURS = 4;
+const INTERVAL_24_HOURS = 24;
 
 
 class App extends Component {
@@ -33,6 +33,7 @@ class App extends Component {
 
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleTimeIntervalChange = this.handleTimeIntervalChange.bind(this);
+    this.handleTimeNavigation = this.handleTimeNavigation.bind(this);
     this.handleAnimationToggle = this.handleAnimationToggle.bind(this);
 
     const queryParams = queryString.parse(props.location.search);
@@ -97,8 +98,23 @@ class App extends Component {
     this.setState({screenshotDateTime: newDay});
   }
 
-  handleTimeIntervalChange(newInterval) {
-    this.setState({timeInterval: newInterval});
+  handleTimeIntervalChange(event) {
+    this.setState({timeInterval: event.target.value});
+  }
+
+  handleTimeNavigation(event) {
+    var newDateTime = this.state.screenshotDateTime;
+
+    // Might be better to split this into two methods, but this works for now
+    if (event.currentTarget.id === "subtractButton") {
+      newDateTime = moment(this.state.screenshotDateTime).subtract(this.state.timeInterval, 'hours').toDate();
+    } else if (event.currentTarget.id === "addButton") {
+      newDateTime = moment(this.state.screenshotDateTime).add(this.state.timeInterval, 'hours').toDate();
+    } else {
+      console.log("Clicked an unknown button, :ohno:");
+    }
+
+    this.setState({screenshotDateTime: newDateTime});
   }
 
   // Unused with removal of "animate" button
@@ -174,19 +190,19 @@ class App extends Component {
 
           <div className="form-row justify-content-md-center py-2">
             {/* TODO - need Font Awesome or somethin https://www.npmjs.com/package/react-fontawesome */}
-            <button type="button" className="btn btn-info">Subtract</button>
+            <button type="button" className="btn btn-info" id="subtractButton" onClick={this.handleTimeNavigation}>Subtract</button>
 
             <div className="px-2">
               <form>
-                <select className="form-control" value={this.props.timeInterval} onChange={this.handleTimeIntervalChange}>
-                  <option value={INTERVAL_1_HOUR} key={INTERVAL_1_HOUR}>{INTERVAL_1_HOUR}</option>
-                  <option value={INTERVAL_4_HOURS} key={INTERVAL_4_HOURS}>{INTERVAL_4_HOURS}</option>
-                  <option value={INTERVAL_24_HOURS} key={INTERVAL_24_HOURS}>{INTERVAL_24_HOURS}</option>
+                <select className="form-control" value={this.state.timeInterval} onChange={this.handleTimeIntervalChange}>
+                  <option value={INTERVAL_1_HOUR} key={INTERVAL_1_HOUR}>{INTERVAL_1_HOUR} Hour</option>
+                  <option value={INTERVAL_4_HOURS} key={INTERVAL_4_HOURS}>{INTERVAL_4_HOURS} Hours</option>
+                  <option value={INTERVAL_24_HOURS} key={INTERVAL_24_HOURS}>{INTERVAL_24_HOURS} Hours</option>
                 </select>
               </form>
             </div>
 
-            <button type="button" className="btn btn-info">Add</button>
+            <button type="button" className="btn btn-info" id="addButton" onClick={this.handleTimeNavigation}>Add</button>
           </div>
 
           {/* TODO I think <br> is bad so change this? */}
