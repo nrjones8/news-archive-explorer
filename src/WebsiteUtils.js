@@ -10,7 +10,10 @@ function getWebsitePreviewText(site) {
     const previewText = {
         [WAPO]: "For large parts of January and February 2019, screenshots failed " +
             "only for washingtonpost.com. You may see a higher rate of blank " +
-            "screenshots during this period."
+            "screenshots during this period.",
+        [WSJ]: "For a large part of April and start of May 2019, the WSJ had an undismissed " +
+            "modal appear on the homepage. Screenshots during this period unfortunately are " +
+            "hidden beneath that modal; this will be changed soon!"
     }
 
     // Fine with returning a default of null
