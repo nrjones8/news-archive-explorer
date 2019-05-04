@@ -82,6 +82,7 @@ class App extends Component {
       rightWebsite: rightWebsite,
       yearMonthDay: dateToUse,
 
+      // Unused with removal of "animate" button
       isAnimating: false,
       animationButtonText: ANIMATION_START_TEXT,
       // do we need to clearInterval..?
@@ -100,6 +101,7 @@ class App extends Component {
     this.setState({timeInterval: newInterval});
   }
 
+  // Unused with removal of "animate" button
   handleAnimationToggle(event) {
     if (this.state.isAnimating) {
       this.setState({
@@ -164,15 +166,7 @@ class App extends Component {
                 className="form-control"
               />
 
-              <div className="px-2">
-                <button
-                  onClick={this.handleAnimationToggle}
-                  type="button"
-                  className="btn btn-primary"
-                >
-                  {this.state.animationButtonText}
-                </button>
-              </div>
+              {/* used to have the "animate" button here, leaving this as placeholder in case want to add it back */}
 
             {/* TODO - "share current view" button */}
 
