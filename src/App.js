@@ -111,7 +111,7 @@ class App extends Component {
       clearInterval(this.state.timer);
     } else {
       const interval = setInterval(
-        () => this.incrementTime(),
+        () => this.animateTimeForward(),
         1500
       );
       this.setState({
@@ -122,7 +122,7 @@ class App extends Component {
     }
   }
 
-  incrementTime() {
+  animateTimeForward() {
     // TODO (UX) make this configurable (i.e. allow for adding 1 day or 1 hour or 6 hours etc.)
     const updated = moment(this.state.yearMonthDay).add(1, 'days').toDate();
     if (updated > MIN_DATE && updated < MAX_DATE) {
