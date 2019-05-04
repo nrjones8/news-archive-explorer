@@ -80,7 +80,7 @@ class App extends Component {
     return {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
-      yearMonthDay: dateToUse,
+      screenshotDateTime: dateToUse,
 
       // Unused with removal of "animate" button
       isAnimating: false,
@@ -94,7 +94,7 @@ class App extends Component {
   }
 
   handleDayChange(newDay) {
-    this.setState({yearMonthDay: newDay});
+    this.setState({screenshotDateTime: newDay});
   }
 
   handleTimeIntervalChange(newInterval) {
@@ -124,9 +124,9 @@ class App extends Component {
 
   animateTimeForward() {
     // TODO (UX) make this configurable (i.e. allow for adding 1 day or 1 hour or 6 hours etc.)
-    const updated = moment(this.state.yearMonthDay).add(1, 'days').toDate();
+    const updated = moment(this.state.screenshotDateTime).add(1, 'days').toDate();
     if (updated > MIN_DATE && updated < MAX_DATE) {
-      this.setState({yearMonthDay: updated});
+      this.setState({screenshotDateTime: updated});
     } else {
       // TODO tell the user?
       console.log(`Date outside of current supported range of ${MIN_DATE} to ${MAX_DATE}`);
@@ -154,7 +154,7 @@ class App extends Component {
                 https://github.com/davidchin/react-input-range
               */}
               <DatePicker
-                selected={this.state.yearMonthDay}
+                selected={this.state.screenshotDateTime}
                 onChange={this.handleDayChange}
                 showTimeSelect
                 dateFormat="MMMM d, yyyy ha"
@@ -197,17 +197,17 @@ class App extends Component {
               <div className="card-deck">
                 <ScreenshotCard
                   website={this.state.leftWebsite}
-                  year={this.state.yearMonthDay.getUTCFullYear()}
-                  month={this.state.yearMonthDay.getUTCMonth() + 1}
-                  day={this.state.yearMonthDay.getUTCDate()}
-                  hour={this.state.yearMonthDay.getUTCHours()}
+                  year={this.state.screenshotDateTime.getUTCFullYear()}
+                  month={this.state.screenshotDateTime.getUTCMonth() + 1}
+                  day={this.state.screenshotDateTime.getUTCDate()}
+                  hour={this.state.screenshotDateTime.getUTCHours()}
                 />
                 <ScreenshotCard
                   website={this.state.rightWebsite}
-                  year={this.state.yearMonthDay.getUTCFullYear()}
-                  month={this.state.yearMonthDay.getUTCMonth() + 1}
-                  day={this.state.yearMonthDay.getUTCDate()}
-                  hour={this.state.yearMonthDay.getUTCHours()}
+                  year={this.state.screenshotDateTime.getUTCFullYear()}
+                  month={this.state.screenshotDateTime.getUTCMonth() + 1}
+                  day={this.state.screenshotDateTime.getUTCDate()}
+                  hour={this.state.screenshotDateTime.getUTCHours()}
                 />
               </div>
             </div>
