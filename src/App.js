@@ -152,7 +152,7 @@ class App extends Component {
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm" intervalhours="24" onClick={this.handleTimeNavigation}>
-                  24 hours
+                  24 Hrs
                   <FaAngleRight />
                 </button>
               </div>
