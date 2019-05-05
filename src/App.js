@@ -160,17 +160,17 @@ class App extends Component {
               <div className="datetimenav">
                 <button type="button" className="btn btn-info btn-sm" intervalhours="-24" onClick={this.handleTimeNavigation}>
                   <FaAngleLeft />
-                  24 Hours
+                  24 Hrs
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm" intervalhours="-4" onClick={this.handleTimeNavigation}>
                   <FaAngleLeft />
-                  4 Hours
+                  4 Hrs
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm mr-2" intervalhours="-1" onClick={this.handleTimeNavigation}>
                   <FaAngleLeft />
-                  1 Hour
+                  1 Hr
                 </button>
 
                 <DatePicker
@@ -187,17 +187,17 @@ class App extends Component {
                 />
 
                 <button type="button" className="btn btn-info btn-sm ml-2" intervalhours="1" onClick={this.handleTimeNavigation}>
-                  1 Hour
+                  1 Hr
                   <FaAngleRight />
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm" intervalhours="4" onClick={this.handleTimeNavigation}>
-                  4 Hours
+                  4 Hrs
                   <FaAngleRight />
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm" intervalhours="24" onClick={this.handleTimeNavigation}>
-                  24 Hours
+                  24 Hrs
                   <FaAngleRight />
                 </button>
               </div>
