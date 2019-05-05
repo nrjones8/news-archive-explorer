@@ -21,16 +21,12 @@ const MIN_DATE = new Date(2019, 0, 0);
 // TODO - make sure timezones are handled correctly here, they're probably not
 const MAX_DATE = new Date();
 
-const ANIMATION_START_TEXT = "Animate";
-const ANIMATION_PAUSE_TEXT = "Pause";
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleTimeNavigation = this.handleTimeNavigation.bind(this);
-    this.handleAnimationToggle = this.handleAnimationToggle.bind(this);
 
     const queryParams = queryString.parse(props.location.search);
     this.state = this.getInitialState(queryParams);
@@ -78,13 +74,6 @@ class App extends Component {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
       screenshotDateTime: dateToUse,
-
-      // Unused with removal of "animate" button
-      isAnimating: false,
-      animationButtonText: ANIMATION_START_TEXT,
-      // do we need to clearInterval..?
-      // https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class
-      timer: null,
     };
   }
 
@@ -103,40 +92,6 @@ class App extends Component {
     }
 
     this.setState({screenshotDateTime: newDateTime});
-  }
-
-  // Unused with removal of "animate" button
-  handleAnimationToggle(event) {
-    if (this.state.isAnimating) {
-      this.setState({
-        isAnimating: false,
-        animationButtonText: ANIMATION_START_TEXT,
-      });
-      clearInterval(this.state.timer);
-    } else {
-      const interval = setInterval(
-        () => this.animateTimeForward(),
-        1500
-      );
-      this.setState({
-        isAnimating: true,
-        animationButtonText: ANIMATION_PAUSE_TEXT,
-        timer: interval,
-      });
-    }
-  }
-
-  animateTimeForward() {
-    // TODO (UX) make this configurable (i.e. allow for adding 1 day or 1 hour or 6 hours etc.)
-    const updated = moment(this.state.screenshotDateTime).add(1, 'days').toDate();
-    if (updated > MIN_DATE && updated < MAX_DATE) {
-      this.setState({screenshotDateTime: updated});
-    } else {
-      // TODO tell the user?
-      console.log(`Date outside of current supported range of ${MIN_DATE} to ${MAX_DATE}`);
-      // TODO the point of this call is to pause animation, but it's a little janky and misleading
-      this.handleAnimationToggle();
-    }
   }
 
   // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
@@ -197,7 +152,7 @@ class App extends Component {
                 </button>
 
                 <button type="button" className="btn btn-info btn-sm" intervalhours="24" onClick={this.handleTimeNavigation}>
-                  24 Hrs
+                  24 hours
                   <FaAngleRight />
                 </button>
               </div>
