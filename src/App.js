@@ -222,16 +222,18 @@ class ScreenshotCard extends Component {
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
           <p className="card-text"><small className="text-muted">{getWebsitePreviewText(this.state.websiteName)}</small></p>
-          <img
-            className="card-img-top"
-            // Only website is in this component's state, the rest comes from the parent.
-            // The year/month/day/hour props are expected to be in UTC.
-            src={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}
-            alt={
-              `Screenshot of the homepage of ${this.state.websiteName} taken on ` +
-              `${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours UTC`
-            }
-          />
+          <a target="_blank" href={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}>
+            <img
+              className="card-img-top"
+              // Only website is in this component's state, the rest comes from the parent.
+              // The year/month/day/hour props are expected to be in UTC.
+              src={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}
+              alt={
+                `Screenshot of the homepage of ${this.state.websiteName} taken on ` +
+                `${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours UTC`
+              }
+            />
+          </a>
         </div>
       </div>
     )
