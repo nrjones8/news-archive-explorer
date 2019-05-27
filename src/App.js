@@ -58,8 +58,8 @@ class App extends Component {
     // TODO this is a pretty janky way to handle dates...
     const targetDate = new Date(
       providedYear ? providedYear : 2019,
-      providedMonth ? providedMonth : 2,
-      providedDay ? providedDay : 26,
+      providedMonth ? providedMonth : 4,
+      providedDay ? providedDay : 24,
       // Default to 9am local time if not provided
       providedHour ? providedHour : 9
     );
