@@ -16,7 +16,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 // Handling routing with Github Pages: https://github.com/facebook/create-react-app/issues/1765#issuecomment-327615099
 // TODO that routing isn't actually working :lolsob: fix it if we really need an about page
 const routing = (
-  <Router basename={process.env.PUBLIC_URL}>
+  <Router>
     <div>
       <Route exact path={process.env.PUBLIC_URL + "/"} component={App} />
       <Route exact path={process.env.PUBLIC_URL + "/about"} component={About} />
