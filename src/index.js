@@ -18,8 +18,8 @@ import 'bootstrap/dist/js/bootstrap.js';
 const routing = (
   <Router basename={process.env.PUBLIC_URL}>
     <div>
-      <Route exact path="/" component={App} />
-      <Route exact path="/about" component={About} />
+      <Route exact path={process.env.PUBLIC_URL + "/"} component={App} />
+      <Route exact path={process.env.PUBLIC_URL + "/about"} component={About} />
     </div>
   </Router>
 )
