@@ -11,7 +11,18 @@ class About extends Component {
     return (
         <div>
             <NavBar />
-            <h1>Why would anyone be interested in this</h1>
+            <div className="container mt-5">
+                <h2>About this project</h2>
+                <p>
+                    The screenshots used in this project are taken once an hour, across a number of websites, starting January 1, 2019.
+                    You can find more information about the source of the screenshots, and how to use them for your own project,  <a href="https://github.com/nrjones8/website-screenshotter#news-homepage-archive">here</a>.
+                </p>
+                <p>
+                    This web app itself is built using React, and the code for it lives <a href="https://github.com/nrjones8/news-archive-explorer">on Github</a>. If
+                    you have feedback or spot a bug, please file <a href="https://github.com/nrjones8/news-archive-explorer/issues">a Github issue</a>, or if
+                    you aren't familiar with Github, send an email to newsscreenshotarchive@gmail.com. Thanks for visiting!
+                </p>
+            </div>
         </div>
     )
   }
