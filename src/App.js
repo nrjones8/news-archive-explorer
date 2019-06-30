@@ -55,14 +55,13 @@ class App extends Component {
     const providedMonth = parseInt(queryParams.month) - 1;
     const providedDay = parseInt(queryParams.day);
     const providedHour = parseInt(queryParams.hour);
-    // TODO this is a pretty janky way to handle dates...
-    const targetDate = new Date(
-      providedYear ? providedYear : 2019,
-      providedMonth ? providedMonth : 4,
-      providedDay ? providedDay : 24,
-      // Default to 9am local time if not provided
-      providedHour ? providedHour : 9
-    );
+
+    // default to two days prior, unless full date was parsed from URL
+    var targetDate = moment(new Date()).subtract(2, 'days').toDate();
+
+    if (providedYear && providedMonth && providedDay && providedHour) {
+      targetDate = new Date(providedYear, providedMonth, providedDay, providedHour);
+    }
 
     // TODO - definitely display something if we can't parse the date
     // TODO - this is likely redundant with the targetDate stuff above
