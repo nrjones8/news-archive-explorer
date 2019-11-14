@@ -131,7 +131,7 @@ class App extends Component {
                   selected={this.state.screenshotDateTime}
                   onChange={this.handleDayChange}
                   showTimeSelect
-                  dateFormat="MMMM d, yyyy ha"
+                  dateFormat="MMM d, yyyy ha"
                   timeFormat="HH"
                   timeIntervals={60}
                   minDate={MIN_DATE}
