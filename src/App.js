@@ -34,7 +34,7 @@ class App extends Component {
 
   getInitialState(queryParams) {
     const defaultLeft = "nytimes.com";
-    const defaultRight = "cnn.com"
+    const defaultRight = "foxnews.com";
 
     const leftFromParams = queryParams.siteOne;
     const rightFromParams = queryParams.siteTwo;
