@@ -14,6 +14,8 @@ import 'bootstrap/dist/js/bootstrap.js';
 
 const trackingId = 'UA-154188236-1';
 ReactGA.initialize(trackingId);
+// these will all just be '/' until the hashrouter is fixed, but better than nothing
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 
 // Good simple overview: https://codeburst.io/getting-started-with-react-router-5c978f70df91
