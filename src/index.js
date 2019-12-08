@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+import ReactGA from 'react-ga';
 import { Route, HashRouter as Router } from 'react-router-dom'
 
 import About from './About';
@@ -10,6 +11,9 @@ import * as serviceWorker from './serviceWorker';
 
 // Import Bootstrap CSS and JS
 import 'bootstrap/dist/js/bootstrap.js';
+
+const trackingId = 'UA-154188236-1';
+ReactGA.initialize(trackingId);
 
 
 // Good simple overview: https://codeburst.io/getting-started-with-react-router-5c978f70df91

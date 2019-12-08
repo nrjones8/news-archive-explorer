@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
+import ReactGA from 'react-ga';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
@@ -20,6 +21,10 @@ const MIN_DATE = new Date(2019, 0, 0);
 
 // TODO - make sure timezones are handled correctly here, they're probably not
 const MAX_DATE = new Date();
+
+// Event like changing date, changing websites shown, etc
+const EVENT_CAT_VIEW_CHANGE = 'Screenshot View Change';
+const EVENT_TRACKING_MOMENT_FORMAT = 'YYYY-MM-DD, HH';
 
 class App extends Component {
   constructor(props) {
@@ -78,6 +83,12 @@ class App extends Component {
 
   handleDayChange(newDay) {
     this.setState({screenshotDateTime: newDay});
+
+    ReactGA.event({
+      category: EVENT_CAT_VIEW_CHANGE,
+      action: 'day change',
+      label: moment(newDay).format(EVENT_TRACKING_MOMENT_FORMAT),
+    });
   }
 
   handleTimeNavigation(event) {
@@ -91,6 +102,12 @@ class App extends Component {
     }
 
     this.setState({screenshotDateTime: newDateTime});
+
+    ReactGA.event({
+      category: EVENT_CAT_VIEW_CHANGE,
+      action: 'time change by interval',
+      label: moment(newDateTime).format(EVENT_TRACKING_MOMENT_FORMAT),
+    });
   }
 
   // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
@@ -211,6 +228,11 @@ class ScreenshotCard extends Component {
 
   handleWebsiteChange(websiteName) {
     this.setState({websiteName: websiteName});
+    ReactGA.event({
+      category: EVENT_CAT_VIEW_CHANGE,
+      action: 'website change',
+      label: websiteName,
+    });
   }
 
   render() {
