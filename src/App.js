@@ -220,14 +220,17 @@ class ScreenshotCard extends Component {
 
     // maybe someday I will understand this
     this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
+    this.handleImageLoaded = this.handleImageLoaded.bind(this);
 
     this.state = {
       websiteName: props.website,
+      imageLoaded: false,
     }
   }
 
   handleWebsiteChange(websiteName) {
     this.setState({websiteName: websiteName});
+    this.setState({imageLoaded: false});
     ReactGA.event({
       category: EVENT_CAT_VIEW_CHANGE,
       action: 'website change',
@@ -235,7 +238,29 @@ class ScreenshotCard extends Component {
     });
   }
 
+  handleImageLoaded() {
+    this.setState({imageLoaded: true});
+  }
+
+  componentDidUpdate(prevProps) {
+    // When the parent component updates the date / time of the screenshot to display, that
+    // ends up changing the props of this component (the year/month/day/hour); as a result, we'll
+    // be loading a new image, and want to loading spinner to be displayed while that image is
+    // still in the process of being loaded.
+    //
+    // https://reactjs.org/docs/react-component.html#componentdidupdate
+    // "Use this as an opportunity to operate on the DOM when the component has been updated.
+    // This is also a good place to do network requests as long as you compare the current props
+    // to previous props (e.g. a network request may not be necessary if the props have not
+    // changed)"
+    if (prevProps !== this.props) {
+      this.setState({imageLoaded: false});
+    }
+  }
+
   render() {
+    const { imageLoaded } = this.state;
+
     return (
       <div className="card App-card">
         <div className="card-body">
@@ -243,7 +268,16 @@ class ScreenshotCard extends Component {
             <WebsitePicker website={this.state.websiteName} onWebsiteChange={this.handleWebsiteChange} />
           </h5>
           <p className="card-text"><small className="text-muted">{getWebsitePreviewText(this.state.websiteName)}</small></p>
+
+          {/* Show a loading spinner while image isn't loaded yet
+            https://getbootstrap.com/docs/4.4/components/spinners/#flex
+          */}
+          <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status" style={{ display: imageLoaded ? 'none' : 'block' }}></div>
+          </div>
+
           <a target="_blank" href={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}>
+            {/* Hide the image until it's loaded */}
             <img
               className="card-img-top"
               // Only website is in this component's state, the rest comes from the parent.
@@ -253,6 +287,8 @@ class ScreenshotCard extends Component {
                 `Screenshot of the homepage of ${this.state.websiteName} taken on ` +
                 `${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours UTC`
               }
+              style={{ display: imageLoaded ? 'block' : 'none' }}
+              onLoad={this.handleImageLoaded}
             />
           </a>
         </div>
