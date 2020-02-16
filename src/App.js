@@ -139,7 +139,7 @@ class App extends Component {
     // this is leaking all sorts of implementation details about ports and such, but should do the trick
     let base = "localhost:3000";
     if (process.env.PUBLIC_URL) {
-      base = `https://${window.location.host}/${process.env.PUBLIC_URL}`;
+      base = `https://${window.location.host}${process.env.PUBLIC_URL}`;
     }
 
     return `${base}/#/?year=${year}&month=${month}&day=${day}&hour=${hour}&siteOne=${leftWebsite}&siteTwo=${rightWebsite}`;
