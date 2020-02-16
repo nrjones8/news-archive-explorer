@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import ReactGA from 'react-ga';
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import queryString from 'query-string';
 import moment from 'moment';
@@ -26,12 +27,16 @@ const MAX_DATE = new Date();
 const EVENT_CAT_VIEW_CHANGE = 'Screenshot View Change';
 const EVENT_TRACKING_MOMENT_FORMAT = 'YYYY-MM-DD, HH';
 
+const SHARE_LINK_BTN_TEXT = 'Share link to current view';
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleTimeNavigation = this.handleTimeNavigation.bind(this);
+    this.updateLeftWebsite = this.updateLeftWebsite.bind(this);
+    this.updateRightWebsite = this.updateRightWebsite.bind(this);
 
     const queryParams = queryString.parse(props.location.search);
     this.state = this.getInitialState(queryParams);
@@ -56,16 +61,19 @@ class App extends Component {
       : defaultRight;
 
     const providedYear = parseInt(queryParams.year);
-    // Zero-indexed
-    const providedMonth = parseInt(queryParams.month) - 1;
+    const providedMonth = parseInt(queryParams.month);
     const providedDay = parseInt(queryParams.day);
     const providedHour = parseInt(queryParams.hour);
 
     // default to two days prior, unless full date was parsed from URL
-    var targetDate = moment(new Date()).subtract(2, 'days').toDate();
+    let targetDate = moment(new Date()).subtract(2, 'days').toDate();
 
     if (providedYear && providedMonth && providedDay && providedHour) {
-      targetDate = new Date(providedYear, providedMonth, providedDay, providedHour);
+      const inUtc = moment.utc(
+        `${providedYear}-${providedMonth}-${providedDay}-${providedHour}`,
+        'YYYY-MM-DD-kk',
+      );
+      targetDate = inUtc.local().toDate();
     }
 
     // TODO - definitely display something if we can't parse the date
@@ -78,6 +86,8 @@ class App extends Component {
       leftWebsite: leftWebsite,
       rightWebsite: rightWebsite,
       screenshotDateTime: dateToUse,
+
+      copyLinkText: SHARE_LINK_BTN_TEXT,
     };
   }
 
@@ -110,8 +120,29 @@ class App extends Component {
     });
   }
 
-  // TODO create the proper URL for someone to share the current view (i.e. based on 2 websites shown and date/time)
-  generateDeeplink() {}
+  updateLeftWebsite(newSite) {
+    this.setState({leftWebsite: newSite});
+  }
+
+  updateRightWebsite(newSite) {
+    this.setState({rightWebsite: newSite});
+  }
+
+  generateDeeplink() {
+    const year = this.state.screenshotDateTime.getUTCFullYear();
+    const month = this.state.screenshotDateTime.getUTCMonth() + 1;
+    const day = this.state.screenshotDateTime.getUTCDate();
+    const hour = this.state.screenshotDateTime.getUTCHours();
+
+    const { leftWebsite, rightWebsite } = this.state;
+
+    // this is leaking all sorts of implementation details about ports and such, but should do the trick
+    const base = process.env.PUBLIC_URL
+      ? process.env.PUBLIC_URL
+      : "localhost:3000";
+
+    return `${base}/#/?year=${year}&month=${month}&day=${day}&hour=${hour}&siteOne=${leftWebsite}&siteTwo=${rightWebsite}`;
+  }
 
   render() {
     return (
@@ -172,9 +203,21 @@ class App extends Component {
                   <FaAngleRight />
                 </button>
               </div>
+          </div>
 
-            {/* TODO - "share current view" button */}
-
+          <div className="form-row justify-content-md-center" id="share-link-wrapper">
+            <CopyToClipboard
+              text={this.generateDeeplink()}
+              onCopy={() => {
+                this.setState({copyLinkText: 'Copied!'});
+                // Show confirmation for one second before setting "copy link" text back
+                setTimeout(() => this.setState({copyLinkText: SHARE_LINK_BTN_TEXT}), 1000);
+              }}
+            >
+              <button type="button" className="btn btn-info btn-sm">
+                { this.state.copyLinkText }
+              </button>
+            </CopyToClipboard>
           </div>
 
           {/* TODO I think <br> is bad so change this? */}
@@ -189,6 +232,7 @@ class App extends Component {
                   month={this.state.screenshotDateTime.getUTCMonth() + 1}
                   day={this.state.screenshotDateTime.getUTCDate()}
                   hour={this.state.screenshotDateTime.getUTCHours()}
+                  propogateWebsiteUpdate={this.updateLeftWebsite}
                 />
                 <ScreenshotCard
                   website={this.state.rightWebsite}
@@ -196,6 +240,7 @@ class App extends Component {
                   month={this.state.screenshotDateTime.getUTCMonth() + 1}
                   day={this.state.screenshotDateTime.getUTCDate()}
                   hour={this.state.screenshotDateTime.getUTCHours()}
+                  propogateWebsiteUpdate={this.updateRightWebsite}
                 />
               </div>
             </div>
@@ -229,13 +274,16 @@ class ScreenshotCard extends Component {
   }
 
   handleWebsiteChange(websiteName) {
-    this.setState({websiteName: websiteName});
-    this.setState({imageLoaded: false});
+    this.setState({
+      websiteName: websiteName,
+      imageLoaded: false,
+    });
     ReactGA.event({
       category: EVENT_CAT_VIEW_CHANGE,
       action: 'website change',
       label: websiteName,
     });
+    this.props.propogateWebsiteUpdate(websiteName);
   }
 
   handleImageLoaded() {
@@ -253,7 +301,13 @@ class ScreenshotCard extends Component {
     // This is also a good place to do network requests as long as you compare the current props
     // to previous props (e.g. a network request may not be necessary if the props have not
     // changed)"
-    if (prevProps !== this.props) {
+    const doesntMatch = prevProps.website !== this.props.website ||
+      prevProps.year !== this.props.year ||
+      prevProps.month !== this.props.month ||
+      prevProps.day !== this.props.day ||
+      prevProps.hour !== this.props.hour;
+
+    if (doesntMatch) {
       this.setState({imageLoaded: false});
     }
   }
