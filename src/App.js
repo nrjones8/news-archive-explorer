@@ -137,9 +137,10 @@ class App extends Component {
     const { leftWebsite, rightWebsite } = this.state;
 
     // this is leaking all sorts of implementation details about ports and such, but should do the trick
-    const base = process.env.PUBLIC_URL
-      ? process.env.PUBLIC_URL
-      : "localhost:3000";
+    let base = "localhost:3000";
+    if (process.env.PUBLIC_URL) {
+      base = `https://${window.location.host}/${process.env.PUBLIC_URL}`;
+    }
 
     return `${base}/#/?year=${year}&month=${month}&day=${day}&hour=${hour}&siteOne=${leftWebsite}&siteTwo=${rightWebsite}`;
   }
