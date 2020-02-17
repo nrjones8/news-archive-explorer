@@ -29,6 +29,10 @@ const EVENT_TRACKING_MOMENT_FORMAT = 'YYYY-MM-DD, HH';
 
 const SHARE_LINK_BTN_TEXT = 'Share link to current view';
 
+const IMAGE_STATUS_LOADING = 'loading';
+const IMAGE_STATUS_LOADED = 'loaded';
+const IMAGED_STATUS_FAILED = 'failed';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -266,18 +270,17 @@ class ScreenshotCard extends Component {
 
     // maybe someday I will understand this
     this.handleWebsiteChange = this.handleWebsiteChange.bind(this);
-    this.handleImageLoaded = this.handleImageLoaded.bind(this);
 
     this.state = {
       websiteName: props.website,
-      imageLoaded: false,
+      imageStatus: IMAGE_STATUS_LOADING,
     }
   }
 
   handleWebsiteChange(websiteName) {
     this.setState({
       websiteName: websiteName,
-      imageLoaded: false,
+      imageStatus: IMAGE_STATUS_LOADING,
     });
     ReactGA.event({
       category: EVENT_CAT_VIEW_CHANGE,
@@ -285,10 +288,6 @@ class ScreenshotCard extends Component {
       label: websiteName,
     });
     this.props.propogateWebsiteUpdate(websiteName);
-  }
-
-  handleImageLoaded() {
-    this.setState({imageLoaded: true});
   }
 
   componentDidUpdate(prevProps) {
@@ -309,12 +308,12 @@ class ScreenshotCard extends Component {
       prevProps.hour !== this.props.hour;
 
     if (doesntMatch) {
-      this.setState({imageLoaded: false});
+      this.setState({imageStatus: IMAGE_STATUS_LOADING});
     }
   }
 
   render() {
-    const { imageLoaded } = this.state;
+    const { imageStatus } = this.state;
 
     return (
       <div className="card App-card">
@@ -328,7 +327,14 @@ class ScreenshotCard extends Component {
             https://getbootstrap.com/docs/4.4/components/spinners/#flex
           */}
           <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status" style={{ display: imageLoaded ? 'none' : 'block' }}></div>
+            <div className="spinner-border" role="status" style={{ display: imageStatus === IMAGE_STATUS_LOADING ? 'block' : 'none' }}></div>
+          </div>
+          <div className="d-flex justify-content-center">
+            <div style={{ display: imageStatus === IMAGED_STATUS_FAILED ? 'block' : 'none' }}>
+              <p>Failed to load screenshot! It's likely the screenshot of this particular time was not captured correctly.</p>
+
+              <p>If problems persist on other screenshots, please report the issue to newsscreenshotarchive@gmail.com.</p>
+            </div>
           </div>
 
           <a target="_blank" href={screenshotUrl(this.state.websiteName, this.props.year, this.props.month, this.props.day, this.props.hour)}>
@@ -342,8 +348,9 @@ class ScreenshotCard extends Component {
                 `Screenshot of the homepage of ${this.state.websiteName} taken on ` +
                 `${this.props.year}-${this.props.month}-${this.props.day}, ${this.props.hour} hours UTC`
               }
-              style={{ display: imageLoaded ? 'block' : 'none' }}
-              onLoad={this.handleImageLoaded}
+              style={{ display: imageStatus === IMAGE_STATUS_LOADED ? 'block' : 'none' }}
+              onLoad={() => this.setState({imageStatus: IMAGE_STATUS_LOADED})}
+              onError={() => this.setState({imageStatus: IMAGED_STATUS_FAILED})}
             />
           </a>
         </div>
