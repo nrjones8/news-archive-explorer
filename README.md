@@ -1,4 +1,6 @@
 # News Archive Explorer
+Live version available at: https://nrjones8.github.io/news-archive-explorer/#/
+
 An interface to explore and compare hourly screenshots of newspaper's homepages. The screenshots themselves come from the [News Homepage Archive](https://github.com/nrjones8/website-screenshotter#news-homepage-archive); this repo only contains a React app to render them.
 
 # React Docs
