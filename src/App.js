@@ -333,6 +333,10 @@ class ScreenshotCard extends Component {
             <div style={{ display: imageStatus === IMAGED_STATUS_FAILED ? 'block' : 'none' }}>
               <p>Failed to load screenshot! It's likely the screenshot of this particular time was not captured correctly.</p>
 
+              <p>There is a known gap in screenshots from 10/18/2020 to 10/25/2020, due to a technical issue. The person who runs this project
+              is not pleased about this, but it has since been fixed. Sorry!
+              </p>
+
               <p>If problems persist on other screenshots, please report the issue to newsscreenshotarchive@gmail.com.</p>
             </div>
           </div>
