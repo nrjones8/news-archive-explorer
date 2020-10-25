@@ -69,8 +69,15 @@ class App extends Component {
     const providedDay = parseInt(queryParams.day);
     const providedHour = parseInt(queryParams.hour);
 
+    // special case to show most recent screenshot, this is helpful for monitoring
+    const hasNowParam = !!queryParams.showNow;
+
     // default to two days prior, unless full date was parsed from URL
     let targetDate = moment(new Date()).subtract(2, 'days').toDate();
+
+    if (hasNowParam) {
+      targetDate = moment(new Date()).subtract(1, 'hours').toDate();
+    }
 
     if (providedYear && providedMonth && providedDay && providedHour) {
       const inUtc = moment.utc(
