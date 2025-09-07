@@ -18,7 +18,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './App.css';
 
 // When screenshots are first available - zero-indexed dates, this is JS
-const MIN_DATE = new Date(2019, 0, 0);
+// While there are some older screenshots available, they've been moved to cold storage
+const MIN_DATE = new Date(2023, 0, 0);
 
 // TODO - make sure timezones are handled correctly here, they're probably not
 const MAX_DATE = new Date();
@@ -162,7 +163,7 @@ class App extends Component {
         <NavBar />
         <div className="container mt-5">
           <div className="form-row justify-content-md-center">
-              {/* 
+              {/*
                 TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
                 https://github.com/namespace-ee/react-calendar-timeline
                 https://github.com/onejgordon/react-life-timeline

@@ -14,7 +14,7 @@ class About extends Component {
             <div className="container mt-5">
                 <h2>About this project</h2>
                 <p>
-                    The screenshots used in this project are taken once an hour, across a number of websites, starting January 1, 2019.
+                    The screenshots used in this project are taken once an hour, across a number of websites, starting January 1, 2019. However, screenshots from before Jan 1, 2023 have been archived in cold storage and are not available to view here - please reach out using the contact info below if you are interested in accessing older screenshots.
                     You can find more information about the source of the screenshots, and how to use them for your own project, <a href="https://github.com/nrjones8/website-screenshotter#news-homepage-archive" target="_blank" rel="noopener noreferrer">here</a>.
                 </p>
                 <p>
