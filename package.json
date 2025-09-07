@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.3.8",
     "bootswatch": "^4.3.1",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^6.3.0",
     "jquery": "^3.4.0",
     "moment": "^2.24.0",
     "popper.js": "^1.15.0",
@@ -17,8 +17,7 @@
     "react-dom": "^16.8.6",
     "react-ga": "^2.7.0",
     "react-icons": "^3.6.1",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8"
+    "react-router-dom": "^5.0.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -37,5 +36,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "https://nrjones8.github.io/news-archive-explorer"
+  "homepage": "https://nrjones8.github.io/news-archive-explorer",
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }
