@@ -19,7 +19,7 @@ import './App.css';
 
 // When screenshots are first available - zero-indexed dates, this is JS
 // While there are some older screenshots available, they've been moved to cold storage
-const MIN_DATE = new Date(2023, 0, 0);
+const MIN_DATE = new Date(2024, 0, 0);
 
 // TODO - make sure timezones are handled correctly here, they're probably not
 const MAX_DATE = new Date();
