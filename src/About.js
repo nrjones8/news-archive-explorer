@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import NavBar from './NavBar.js';
+import { MIN_DATE, MAX_DATE } from './App.js';
 
 import 'bootswatch/dist/litera/bootstrap.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -14,7 +16,11 @@ class About extends Component {
             <div className="container mt-5">
                 <h2>About this project</h2>
                 <p>
-                    The screenshots used in this project are taken once an hour, across a number of websites, starting January 1, 2019. However, screenshots from before Jan 1, 2024 have been archived in cold storage and are not available to view here - please reach out using the contact info below if you are interested in accessing older screenshots.
+                    This project has been retired as of {moment(MAX_DATE).format('MMMM D, YYYY')}, but the screenshot archive remains available to browse.
+                    Screenshots were taken once an hour across a number of news websites starting January 1, 2019; screenshots
+                    from {moment(MIN_DATE).format('MMMM D, YYYY')} through {moment(MAX_DATE).format('MMMM D, YYYY')} are
+                    available here. Earlier screenshots have been moved to cold storage — please reach out using the contact
+                    info below if you are interested in accessing them.
                     You can find more information about the source of the screenshots, and how to use them for your own project, <a href="https://github.com/nrjones8/website-screenshotter#news-homepage-archive" target="_blank" rel="noopener noreferrer">here</a>.
                 </p>
                 <p>

@@ -19,10 +19,10 @@ import './App.css';
 
 // When screenshots are first available - zero-indexed dates, this is JS
 // While there are some older screenshots available, they've been moved to cold storage
-const MIN_DATE = new Date(2024, 0, 0);
+export const MIN_DATE = new Date(2024, 0, 0);
 
-// TODO - make sure timezones are handled correctly here, they're probably not
-const MAX_DATE = new Date();
+// Hardcoded to the last date screenshots were captured (app retirement date)
+export const MAX_DATE = new Date(2026, 4, 3);
 
 // Event like changing date, changing websites shown, etc
 const EVENT_CAT_VIEW_CHANGE = 'Screenshot View Change';
@@ -162,6 +162,16 @@ class App extends Component {
       <div className="App-wrapper">
         <NavBar />
         <div className="container mt-5">
+          <div className="row justify-content-md-center">
+            <div className="col-md-8">
+              <div className="alert alert-warning" role="alert">
+                This app is retired and no longer capturing new screenshots, but the archive remains
+                available. You can browse screenshots from{' '}
+                <strong>{moment(MIN_DATE).format('MMMM D, YYYY')}</strong> through{' '}
+                <strong>{moment(MAX_DATE).format('MMMM D, YYYY')}</strong>.
+              </div>
+            </div>
+          </div>
           <div className="form-row justify-content-md-center">
               {/*
                 TODO this would work much better with at "timeline"-like picker...like http://visjs.org/timeline_examples.html
